@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
-  const Calculator({super.key});
+  const Calculator({Key? key});
 
   @override
   State<Calculator> createState() => _CalculatorState();
@@ -28,7 +29,7 @@ class _CalculatorState extends State<Calculator> {
     '2',
     '3',
     '-',
-    'c',
+    'C',
     '0',
     '.',
     '=',
@@ -49,7 +50,7 @@ class _CalculatorState extends State<Calculator> {
                   padding: EdgeInsets.all(15),
                   alignment: Alignment.centerRight,
                   child: Text(
-                    userInput,
+                    userInput.replaceAll("=", ""),
                     style: TextStyle(fontSize: 32, color: Colors.white),
                   ),
                 ),
@@ -57,7 +58,7 @@ class _CalculatorState extends State<Calculator> {
                   padding: EdgeInsets.all(20),
                   alignment: Alignment.centerRight,
                   child: Text(
-                    result,
+                    result.replaceAll("=", ""),
                     style: TextStyle(
                         fontSize: 48,
                         color: Colors.white,
@@ -92,7 +93,11 @@ class _CalculatorState extends State<Calculator> {
   Widget CustomButton(String text) {
     return InkWell(
       splashColor: const Color.fromARGB(255, 255, 255, 255),
-      onTap: () {},
+      onTap: () {
+        setState(() {
+          handleButton(text);
+        });
+      },
       child: Ink(
         decoration: BoxDecoration(
           color: getBgColor(text),
@@ -125,28 +130,71 @@ class _CalculatorState extends State<Calculator> {
         text == '*' ||
         text == '+' ||
         text == '-' ||
-        text == 'c' ||
+        text == 'C' ||
         text == '(' ||
         text == ')') {
-      return const Color.fromARGB(255, 244, 244, 244);
-
-    }  
-      return const Color.fromARGB(255, 118, 118, 118);
-     }
-
-     getBgColor(String text) {
-    if (text == '/' ||
-        text == '*' ||
-        text == '+' ||
-        text == '-' ||
-        text == 'c' ||
-        text == '(' ||
-        text == ')') {
-      return Colors.orange;
-
-    }  
-      return Color.fromARGB(255, 34, 23, 9);
-      
+      return Color.fromARGB(255, 239, 154, 7);
     }
+    return Color.fromARGB(255, 255, 255, 255);
+  }
+
+  getBgColor(String text) {
+    if (text == 'AC') {
+      return Colors.orange;
+    }
+    if (text == '=') {
+      return Color.fromARGB(255, 53, 132, 39);
+    }
+    return Color.fromARGB(255, 34, 23, 9);
+  }
+
+  handleButton(String text) {
+    if (text == "AC") {
+      userInput = "";
+      result = "0";
+      return;
+    }
+    if (text == "C") {
+      if (userInput.isNotEmpty) {
+        userInput = userInput.substring(0, userInput.length - 1);
+        return;
+      } else {
+        return null;
+      }
+    }
+    if (text == "=") {
+      userInput = userInput.replaceAll("=", ""); 
+      result = calculate();
+      userInput = result;
+
+      if (userInput.endsWith(".0")) {
+        userInput = userInput.replaceAll(".0", "");
+      }
+
+      if (result.endsWith(".0")) {
+        result = result.replaceAll(".0", "");
+        return;
+      }
+    }
+    userInput = userInput + text;
+  }
+
+  String calculate() {
+    try {
+      var exp = Parser().parse(userInput);
+      var evaluation = exp.evaluate(EvaluationType.REAL, ContextModel());
+      return evaluation.toString();
+    } catch (e) {
+      return "Error";
+    }
+  }
 }
+
+// void main() {
+//   runApp(MaterialApp(
+//     title: 'Calculator',
+//     home: Calculator(),
+//   ));
+// }
+
 
