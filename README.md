@@ -22,7 +22,7 @@ Output
         <td><b>ios</b></td>
     </tr>
     <tr>
-        <td><img src="images/Screenshot%20(56).png" width="720" height="600"></td>
-        <td><img src="images/Screenshot%20(55).png" width="720" height="600"></td>
+        <td><img src="images/Screenshot%20(56).png" width="400" height="720"></td>
+        <td><img src="images/Screenshot%20(55).png" width="400" height="720"></td>
     </tr>
 </table>
