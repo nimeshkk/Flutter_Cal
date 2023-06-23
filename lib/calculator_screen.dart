@@ -42,12 +42,12 @@ class _CalculatorState extends State<Calculator> {
       body: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height / 3,
+            height: MediaQuery.of(context).size.height / 3.5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.all(10),
                   alignment: Alignment.centerRight,
                   child: Text(
                     userInput.replaceAll("=", ""),
@@ -55,12 +55,12 @@ class _CalculatorState extends State<Calculator> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(10),
                   alignment: Alignment.centerRight,
                   child: Text(
                     result.replaceAll("=", ""),
                     style: TextStyle(
-                        fontSize: 48,
+                        fontSize: 30,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
@@ -76,8 +76,8 @@ class _CalculatorState extends State<Calculator> {
                 itemCount: buttonList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 9,
+                  mainAxisSpacing: 5,
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   return CustomButton(buttonList[index]);
